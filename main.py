@@ -1,5 +1,5 @@
 from os import system, name
-from passripper import *
+import passripper
 import dbmanager
 
 def clearer():
