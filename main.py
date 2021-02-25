@@ -1,5 +1,6 @@
 from os import system, name
-from passripper import generate
+from passripper import *
+import dbmanager
 
 def clearer():
     if(name=="nt"): #checks for windows device
@@ -7,17 +8,8 @@ def clearer():
     else: #linux and mac
         _ =system("clear")
 
-def dbcreate():
-    dbname=input("Enter name of DB: ")
-    f=open(dbname+".txt","w+")
-    f.close()
-    password=generate()
-    print("PASSWORD FOR CREATED DB [PLEASE REMEMBER CAREFULLY][CAN NOT BE RESET]:")
-    print("\t \t",password)
-    waste=input("Press ENTER to go back to menu")
+
     
-
-
 clearer()
 flag=True
 while flag:
@@ -28,5 +20,5 @@ while flag:
     choice=int(input("Enter your choice: "))
     if choice==1:
         clearer()
-        dbcreate()
+        dbmanager.dbcreate()
         clearer()
