@@ -1,6 +1,7 @@
 from os import system, name
 import passripper
 import dbmanager
+import getpass
 
 def clearer():
     if(name=="nt"): #checks for windows device
@@ -22,3 +23,12 @@ while flag:
         clearer()
         dbmanager.dbcreate()
         clearer()
+    if choice==2:
+        clearer()
+        dbname=input("Enter DB name:")
+        p=getpass.getpass(prompt='Enter password of DB:') 
+        dbmanager.livedb(dbname,p)
+        clearer()
+    if choice==3:
+        flag=False
+        exit()
