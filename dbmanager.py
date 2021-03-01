@@ -6,6 +6,8 @@ import passripper
 import random
 import time
 from os import system, name
+from prettytable import from_csv
+import csv 
 
 def clearer():
     if(name=="nt"): #checks for windows device
@@ -13,20 +15,26 @@ def clearer():
     else: #linux and mac
         _ =system("clear")
 
-C={'WEBSITE':[],
-    'USERNAME':[],
-    'PASSWORD':[]}
-df=DataFrame(C)
+# C={'WEBSITE':[],
+#     'USERNAME':[],
+#     'PASSWORD':[]}
+# df=DataFrame(C)
+
+
 
 def dbcreate():
+    fields=[['WEBSITE','USERNAME','PASSWORD']]
     dbname=input("Enter name of DB: ")
     f=open(dbname+".csv","w+")
     f.close()
     password=passripper.generate()
-    df.to_csv(dbname+".csv",index=False)
+    with open(dbname+".csv",'a',newline='\n') as csvfile:
+        writer=csv.writer(csvfile)
+        writer.writerows(fields)
     print("PASSWORD FOR CREATED DB [PLEASE REMEMBER CAREFULLY][CAN NOT BE RESET]:")
     print("\t \t",password,"\n \n")
     print("INITIAL ENCRYPTION:")
+    csvfile.close()
     encrypt(dbname,ceasernum(password))
     print("Encryption taking place!Please wait,It is a time consuming process.")
     time.sleep(6)
@@ -60,7 +68,7 @@ def ceasernum(password):
 
 def encrypt(dbname,ceasernum):
     f=open(dbname+".csv","r")
-    data=f.readline().rstrip('\n')
+    data=f.read()
     result=""
     for i in range(len(data)):
         char=data[i]
@@ -68,10 +76,11 @@ def encrypt(dbname,ceasernum):
     f.close()
     f=open(dbname+".csv","w")
     f.write(result)
+    f.close()
 
 def decrypt(dbname,ceasernum):
     f=open(dbname+".csv","r")
-    data=f.readline().rstrip('\n')
+    data=f.read()
     result=""
     for i in range(len(data)):
         char=data[i]
@@ -79,6 +88,28 @@ def decrypt(dbname,ceasernum):
     f.close()
     f=open(dbname+".csv","w")
     f.write(result)
+    f.close()
+
+def create_entry(dbname):
+    website=input("Enter name of website this credentials will be used for :")
+    username=input("Enter username :")
+    pass_flag=True
+    passneed=input("Is a new password needed [DEFAULT:Y /N] :")
+    entrypass=""    
+    if(passneed=='N'):
+        pass_flag=False
+    else:
+        pass_flag=True
+
+
+    if(pass_flag==True):
+        entrypass+=passripper.generate()
+    else:
+        temp=input("Enter pre-decided password :")
+        entrypass+=temp
+    f=open(dbname+".csv",'a')
+    f.write(website+','+username+','+entrypass+'\n')
+    f.close()
 
 
 def livedb(dbname,password):
@@ -87,6 +118,7 @@ def livedb(dbname,password):
     data=f.readline().rstrip('\n')
     if data[0]!='W':
         encrypt(dbname,ceasernum(password))
+        f.close()
         print("PASSWORD ENTERED IS WRONG!")
         waste=input("Press ENTER to go back to menu")
     else:
@@ -97,10 +129,16 @@ def livedb(dbname,password):
         flag=True
         while flag:
             clearer()
-            df=pd.read_csv(dbname+'.csv')
-            print(df)
+            with open(dbname+".csv", "r") as fp: 
+                x = from_csv(fp)
+            fp.close()
+            print(x)
             print("1.New entry \t \t 2.Exit")
             choice=int(input("Choice:"))
+            if(choice==1):
+                clearer()
+                create_entry(dbname)
+                clearer()
             if(choice==2):
                 encrypt(dbname,ceasernum(password))
                 print("Encryption taking place!Please wait,It is a time consuming process.")
