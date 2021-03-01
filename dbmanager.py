@@ -20,10 +20,18 @@ def clearer():
 #     'PASSWORD':[]}
 # df=DataFrame(C)
 
+def numberlines(dbname):
+    count=0
+    f=open(dbname+'.csv','r')
+    data=f.readline()
+    while data:
+        count+=1
+        data=f.readline()
+    return(count)
 
 
 def dbcreate():
-    fields=[['WEBSITE','USERNAME','PASSWORD']]
+    fields=[['ENTRY NO.','WEBSITE','USERNAME','PASSWORD']]
     dbname=input("Enter name of DB: ")
     f=open(dbname+".csv","w+")
     f.close()
@@ -107,8 +115,9 @@ def create_entry(dbname):
     else:
         temp=input("Enter pre-decided password :")
         entrypass+=temp
+    numline=numberlines(dbname)
     f=open(dbname+".csv",'a')
-    f.write(website+','+username+','+entrypass+'\n')
+    f.write(str(numline)+','+website+','+username+','+entrypass+'\n')
     f.close()
 
 
@@ -116,7 +125,7 @@ def livedb(dbname,password):
     decrypt(dbname,ceasernum(password))
     f=open(dbname+".csv","r")
     data=f.readline().rstrip('\n')
-    if data[0]!='W':
+    if data[0]!='E':
         encrypt(dbname,ceasernum(password))
         f.close()
         print("PASSWORD ENTERED IS WRONG!")
@@ -129,6 +138,9 @@ def livedb(dbname,password):
         flag=True
         while flag:
             clearer()
+            numline=numberlines(dbname)
+            numline-=1
+            print("Number of entries present :",numline,"\t \t","Displayed DB:",dbname)
             with open(dbname+".csv", "r") as fp: 
                 x = from_csv(fp)
             fp.close()
