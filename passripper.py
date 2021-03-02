@@ -6,7 +6,7 @@ import random
 
 ualpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 lalpha="abcdefghijklmnopqrstuvwxyz"
-specchar="!@#$%^&*()_+=-`~'<>.,|/?"
+specchar="!@#$%^&*()_+=-`~'<>.|/?"
 number="1234567890"
 
 

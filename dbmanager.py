@@ -1,7 +1,5 @@
 import time
 import csv
-import pandas as pd
-from pandas import DataFrame
 import passripper
 import random
 import time
@@ -31,7 +29,7 @@ def numberlines(dbname):
 
 
 def dbcreate():
-    fields=[['ENTRY NO.','WEBSITE','USERNAME','PASSWORD']]
+    fields=[['ENTRY NO','WEBSITE','USERNAME','PASSWORD']]
     dbname=input("Enter name of DB: ")
     f=open(dbname+".csv","w+")
     f.close()
@@ -120,6 +118,25 @@ def create_entry(dbname):
     f.write(str(numline)+','+website+','+username+','+entrypass+'\n')
     f.close()
 
+def del_entry(dbname,option):
+    f=open(dbname+'.csv','r')
+    data=f.read()
+    f.close()
+    l=data.split('\n')
+    l.pop(option)
+    moddata="ENTRY NO,WEBSITE,USERNAME,PASSWORD\n"
+    count=1
+    if(len(l)>=2):
+        for i in range(1,len(l)):
+            if(len(l[i])>0):
+                copyi=l[i][1:]
+                copyi+=str(count)
+                count+=1
+                moddata+=copyi+'\n'
+    f=open(dbname+'.csv','w')
+    f.write(moddata)
+    f.close()
+
 
 def livedb(dbname,password):
     decrypt(dbname,ceasernum(password))
@@ -145,19 +162,31 @@ def livedb(dbname,password):
                 x = from_csv(fp)
             fp.close()
             print(x)
-            print("1.New entry \t \t 2.Exit")
+            print("1.New entry \t \t 2.Delete entry \t \t 3.Exit")
             choice=int(input("Choice:"))
             if(choice==1):
                 clearer()
                 create_entry(dbname)
                 clearer()
-            if(choice==2):
+            if(choice ==2):
+                clearer()
+                numline=numberlines(dbname)
+                numline-=1
+                print("Number of entries present :",numline,"\t \t","Displayed DB:",dbname)
+                with open(dbname+".csv", "r") as fp: 
+                    x = from_csv(fp)
+                fp.close()
+                print(x)
+                deloption=int(input("Enter entry number to delete :"))
+                if(deloption<=numline):
+                    del_entry(dbname,deloption)
+                else:
+                    print("\n invalid entry number")
+                    waste=input("Press ENTER to go back to DB")
+            if(choice==3):
                 encrypt(dbname,ceasernum(password))
                 print("Encryption taking place!Please wait,It is a time consuming process.")
                 time.sleep(6)
                 print("\n Encryption over! Your data is now safe.")
                 waste=input("Press ENTER to go back to menu")
                 return
-
-
-#present bookmarks for work
