@@ -10,7 +10,7 @@ specchar="!@#$%^&*()_+=-`~'<>.|/?"
 number="1234567890"
 
 
-
+#----------------generate function called by db fucntions----------------
 def generate():
     #default vals
     def_alpha=8
@@ -38,3 +38,6 @@ def generate():
     return finalpass
 
 print(generate())
+
+#----------------fucntion called by custom password generator----------------
+

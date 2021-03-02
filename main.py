@@ -3,6 +3,7 @@ import passripper
 import dbmanager
 import getpass
 
+#----------------fucntion to clear cli quiclky when needed----------------
 def clearer():
     if(name=="nt"): #checks for windows device
         _ = system('cls')
@@ -10,7 +11,7 @@ def clearer():
         _ =system("clear")
 
 
-    
+#----------------main driver code INITIAL LANDING PAGE----------------
 clearer()
 flag=True
 while flag:

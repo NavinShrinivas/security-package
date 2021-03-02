@@ -7,17 +7,14 @@ from os import system, name
 from prettytable import from_csv
 import csv 
 
+#----------------fucntion to clear cli quiclky when needed----------------
 def clearer():
     if(name=="nt"): #checks for windows device
         _ = system('cls')
     else: #linux and mac
         _ =system("clear")
 
-# C={'WEBSITE':[],
-#     'USERNAME':[],
-#     'PASSWORD':[]}
-# df=DataFrame(C)
-
+#----------------gives total number of entries in db----------------
 def numberlines(dbname):
     count=0
     f=open(dbname+'.csv','r')
@@ -27,7 +24,7 @@ def numberlines(dbname):
         data=f.readline()
     return(count)
 
-
+#----------------creates db with basic coloumns and initial encrytpion----------------
 def dbcreate():
     fields=[['ENTRY NO','WEBSITE','USERNAME','PASSWORD']]
     dbname=input("Enter name of DB: ")
@@ -47,6 +44,7 @@ def dbcreate():
     print("\n Encryption over! Your data is now safe.")
     waste=input("Press ENTER to go back to menu")
 
+#----------------ceaser number fnction which feeds the ceaser num to encryption algorithm----------------
 def ceasernum(password):
     specchar=""
     specflag=True
@@ -71,7 +69,7 @@ def ceasernum(password):
     finalval=random.randint(0,23)
     return(finalval)
         
-
+#----------------custom encryption and decryption algorithm----------------
 def encrypt(dbname,ceasernum):
     f=open(dbname+".csv","r")
     data=f.read()
@@ -96,6 +94,7 @@ def decrypt(dbname,ceasernum):
     f.write(result)
     f.close()
 
+#----------------used to create new entries to db----------------
 def create_entry(dbname):
     website=input("Enter name of website this credentials will be used for :")
     username=input("Enter username :")
@@ -118,6 +117,7 @@ def create_entry(dbname):
     f.write(str(numline)+','+website+','+username+','+entrypass+'\n')
     f.close()
 
+#----------------fucntion to delete entry from db [bug TRACKER]----------------
 def del_entry(dbname,option):
     f=open(dbname+'.csv','r')
     data=f.read()
@@ -130,14 +130,13 @@ def del_entry(dbname,option):
         for i in range(1,len(l)):
             if(len(l[i])>0):
                 copyi=l[i][1:]
-                copyi+=str(count)
-                count+=1
+                copyi=str(i)+copyi
                 moddata+=copyi+'\n'
     f=open(dbname+'.csv','w')
     f.write(moddata)
     f.close()
 
-
+#----------------main landing and driver code for exsisting db's----------------
 def livedb(dbname,password):
     decrypt(dbname,ceasernum(password))
     f=open(dbname+".csv","r")
