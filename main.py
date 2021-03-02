@@ -18,7 +18,8 @@ while flag:
     print("==========PASSWORD MANAGER==========")
     print("1.new DB")
     print("2.existing DB")
-    print("3.Exit")
+    print("3.Custom password generator")
+    print("4.Exit")
     choice=int(input("Enter your choice: "))
     if choice==1:
         clearer()
@@ -30,6 +31,10 @@ while flag:
         p=getpass.getpass(prompt='Enter password of DB:') 
         dbmanager.livedb(dbname,p)
         clearer()
-    if choice==3:
+    if(choice==3):
+        clearer()
+        passripper.custom_gen()
+        clearer()
+    if choice==4:
         flag=False
         exit()
