@@ -76,7 +76,7 @@ def encrypt(dbname,ceasernum):
     result=""
     for i in range(len(data)):
         char=data[i]
-        result+=chr(ord(char)+ceasernum)
+        result+=chr(ord(char)+ceasernum+i)
     f.close()
     f=open(dbname+".csv","w")
     f.write(result)
@@ -88,7 +88,7 @@ def decrypt(dbname,ceasernum):
     result=""
     for i in range(len(data)):
         char=data[i]
-        result+=chr(ord(char)-ceasernum)
+        result+=chr(ord(char)-ceasernum-i)
     f.close()
     f=open(dbname+".csv","w")
     f.write(result)
