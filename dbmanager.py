@@ -189,3 +189,5 @@ def livedb(dbname,password):
                 print("\n Encryption over! Your data is now safe.")
                 waste=input("Press ENTER to go back to menu")
                 return
+            else:
+                print("Enter a valid choice!!")
