@@ -2,7 +2,7 @@ from os import system, name
 import passripper
 import dbmanager
 import getpass
-import customceaser
+# import customceaser
 
 #----------------fucntion to clear cli quiclky when needed----------------
 def clearer():
@@ -20,14 +20,14 @@ while flag:
     print("1.new DB")
     print("2.existing DB")
     print("3.Custom password generator")
-    print("4.Ceaser cipher")
-    print("5.Exit")
+    # print("4.Ceaser cipher")
+    print("4.Exit")
     choice=int(input("Enter your choice: "))
     if choice==1:
         clearer()
         dbmanager.dbcreate()
         clearer()
-    if choice==2:
+    elif choice==2:
         clearer()
         dbname=input("Enter DB name:")
         try:
@@ -39,16 +39,16 @@ while flag:
             p=getpass.getpass(prompt='Enter password of DB:') 
             dbmanager.livedb(dbname,p)
         clearer()
-    if(choice==3):
+    elif(choice==3):
         clearer()
         passripper.custom_gen()
         clearer()
-    if choice==4:
-        clearer()
-        print("Enter file name with extension[.txt,.csv] or type text directly :\n")
-        data=input("INPUT:")
-        typ=customceaser.classifier(data)
-    if choice==5:
+    # if choice==4:
+    #     clearer()
+    #     print("Enter file name with extension[.txt,.csv] or type text directly :\n")
+    #     data=input("INPUT:")
+    #     typ=customceaser.classifier(data)
+    elif choice==4:
         flag=False
         exit()
     else:
