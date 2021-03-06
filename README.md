@@ -5,4 +5,5 @@
 <pre><code>pip3 install -r requirement.txt
 </code></pre>
 <h2 id="project-info">Project Info</h2>
-<p>this is still  a <strong>WORK IN PROGRESS</strong> more details will be added here in the right time</p>
+<p>This entier project can be run only from main.py so, execute:</p>
+<pre><code>python3 main.py</code></pre>
