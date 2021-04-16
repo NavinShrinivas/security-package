@@ -2,6 +2,7 @@ from os import system, name
 import passripper
 import dbmanager
 import getpass
+import dbquery
 # import customceaser
 
 #----------------fucntion to clear cli quiclky when needed----------------
@@ -20,8 +21,8 @@ while flag:
     print("1.new DB")
     print("2.existing DB")
     print("3.Custom password generator")
-    # print("4.Ceaser cipher")
-    print("4.Exit")
+    print("4.Query DB")
+    print("5.Exit")
     choice=int(input("Enter your choice: "))
     if choice==1:
         clearer()
@@ -49,6 +50,13 @@ while flag:
     #     data=input("INPUT:")
     #     typ=customceaser.classifier(data)
     elif choice==4:
+        clearer()
+        dbname=input("Enter DB name to query from:")
+        p=getpass.getpass(prompt='Enter password of DB:')
+        q=str(input("Enter website name to retrive info:"))
+        dbquery.query(dbname,p,q)
+        clearer()
+    elif choice==5:
         flag=False
         exit()
     else:
